@@ -390,12 +390,12 @@ namespace COM3D2.PoseStream.Plugin
 		{
 			if (anmName.Length == 0)
 			{
-				return myError("名前が入力されていません.\n이름이 입력되어 있지 않습니다");
+				return myError("이름이 입력되어 있지 않습니다");
 			}
 			String[] files = Directory.GetFiles(getPoseDataPath(false), anmName + @"_????????.anm", SearchOption.TopDirectoryOnly);
 			if (files == null || files.Length == 0)
 			{
-				return myError("連結対象のポーズ연결 대상의 포즈\n(" + anmName + "_00000000～)\nがありません이 없습니다");
+				return myError("연결 대상의 포즈\n(" + anmName + "_00000000～)\n이 없습니다");
 			}
 			List<String> lf = new List<string>(files);
 			List<String> ps = new List<string>();
@@ -423,26 +423,26 @@ namespace COM3D2.PoseStream.Plugin
             //파일이 없을때
             if (ps.Count == 0)
 			{
-				return myError("連結対象のポーズ연결 대상의 포즈\n(" + anmName + "_00000000～)\nが見つかりません찾을 수 없습니다");
+				return myError("연결 대상의 포즈\n(" + anmName + "_00000000～)\n찾을 수 없습니다");
 			}
 			ps.Sort();
             //파일이 하나일때
 			if (ps.Count == 1)
 			{
-				return myError("連結対象のポーズ연결 대상의 포즈\n(" + anmName + "_00000000～)\nが一つしかありません이 하나 밖에 없습니다");
+				return myError("연결 대상의 포즈\n(" + anmName + "_00000000～)\n이 하나 밖에 없습니다");
 			}
 			else if (get00000000byInt(ps[0]) != 0)
 			{
-				return myError("最初のポーズ첫 번째 포즈(" + anmName + "_00000000)がありません이 없습니다");
+				return myError("첫 번째 포즈(" + anmName + "_00000000)이 없습니다");
 			}
             Debug.Log("PoseStream3 ps.Count : " + ps.Count);
             if (minAnmMake)
             {
                 // 중간 anm 생성
-                if (makeAnmFile2(ps.ToArray()))
+                if (makeAnmFileMid(ps.ToArray()))
                 {
-                    Debug.Log("=== makeAnmFile2 ok ===" );                    
-                    return "モーション모션「" + anmName + ".anm」を生成しました를 생성했습니다\nマイポーズのカテゴリをすでに表示している場合は\n一旦別のカテゴリを表示後にマイポーズを再表示してください\n마이뽀즈 범주를 이미보고있는 경우\n일단 다른 카테고리를 표시 후 마이뽀즈를 다시 표시하십시오";
+                    Debug.Log("=== makeAnmFileMid ok ===" );                    
+                    return "모션「" + anmName + ".anm」를 생성했습니다\n일단 다른 카테고리를 표시 후 마이뽀즈를 다시 표시하십시오";
                 }
             }
             else
@@ -451,7 +451,7 @@ namespace COM3D2.PoseStream.Plugin
                 if (makeAnmFile(ps.ToArray()))
                 {
                     Debug.Log("=== makeAnmFile ok ===");
-                    return "モーション모션「" + anmName + ".anm」を生成しました를 생성했습니다\nマイポーズのカテゴリをすでに表示している場合は\n一旦別のカテゴリを表示後にマイポーズを再表示してください\n마이뽀즈 범주를 이미보고있는 경우\n일단 다른 카테고리를 표시 후 마이뽀즈를 다시 표시하십시오";
+                    return "모션「" + anmName + ".anm」를 생성했습니다\n마이뽀즈 범주를 이미보고있는 경우\n일단 다른 카테고리를 표시 후 마이뽀즈를 다시 표시하십시오";
                 }
             }
 
@@ -759,7 +759,7 @@ namespace COM3D2.PoseStream.Plugin
                     }
                     catch (Exception)
                     {
-                        errorFile = "ポーズ「" + s + "」の読み込み中にエラーが発生しました\n로드하는 동안 오류가 발생했습니다";
+                        errorFile = "ポーズ「" + s + "」\n로드하는 동안 오류가 발생했습니다";
                         return false;
                     }
                 }
@@ -783,7 +783,7 @@ namespace COM3D2.PoseStream.Plugin
                 }
                 catch (Exception)
                 {
-                    errorFile = "モーション「" + anmName + ".anm」の書き出し中にエラーが発生しました\n내보내기 중에 오류가 발생했습니다";
+                    errorFile = "モーション「" + anmName + ".anm」\n내보내기 중에 오류가 발생했습니다";
                     return false;
                 }
             }
@@ -807,8 +807,14 @@ namespace COM3D2.PoseStream.Plugin
             return true;
         }
 
-        // 실제 파일 생성. 중간 생성
-        private bool makeAnmFile2(String[] ss)
+
+
+        /// <summary>
+        /// 실제 파일 생성. 중간 생성
+        /// </summary>
+        /// <param name="ss"></param>
+        /// <returns></returns>
+        private bool makeAnmFileMid(String[] ss)
         {
 
             //読み込み
@@ -1028,7 +1034,7 @@ namespace COM3D2.PoseStream.Plugin
                     }
                     catch (Exception)
                     {
-                        errorFile = "ポーズ「" + s + "」の読み込み中にエラーが発生しました\n로드하는 동안 오류가 발생했습니다";
+                        errorFile = "ポーズ「" + s + "」로드하는 동안 오류가 발생했습니다";
                         return false;
                     }
                 }
@@ -1241,14 +1247,14 @@ namespace COM3D2.PoseStream.Plugin
                     }
                     catch (Exception)
                     {
-                        errorFile = "ポーズ「" + s + "」の読み込み中にエラーが発生しました\n로드하는 동안 오류가 발생했습니다";
+                        errorFile = "ポーズ「" + s + "」로드하는 동안 오류가 발생했습니다";
                         return false;
                     }
                 }
 
 
                 // 파일로 출력
-                int si = get00000000byInt2(s, s2);
+                int si = get00000000byIntMid(s, s2);
                 Debug.Log("String si " + si);
                 using (BinaryWriter w = new BinaryWriter(File.Create(getPoseDataPath(true) + anmName + "_" + si.ToString("D8") + ".anm")))
                 {
@@ -1265,7 +1271,7 @@ namespace COM3D2.PoseStream.Plugin
                     }
                     catch (Exception)
                     {
-                        errorFile = "モーション「" + anmName + ".anm」の書き出し中にエラーが発生しました\n내보내기 중에 오류가 발생했습니다";
+                        errorFile = "モーション「" + anmName + ".anm」내보내기 중에 오류가 발생했습니다";
                         return false;
                     }
                 }
@@ -1294,7 +1300,7 @@ namespace COM3D2.PoseStream.Plugin
             b.c.Add(bc);
         }
 
-        private void BoneDataCadd2(int time,  BinaryReader r,  BoneDataB b)
+        private void BoneDataCaddMid(int time,  BinaryReader r,  BoneDataB b)
         {
             r.ReadBytes(4);
             byte[] raw3 = r.ReadBytes(12);
@@ -1380,7 +1386,12 @@ namespace COM3D2.PoseStream.Plugin
 				return lb.ToArray();
 			}
 		}
-		private class BoneDataC
+
+
+        /// <summary>
+        /// 중간값용 데이터를위해 개조
+        /// </summary>
+        private class BoneDataC
 		{
 			public int time = 0;
 			public int time2 = 0;
@@ -1405,6 +1416,11 @@ namespace COM3D2.PoseStream.Plugin
                 //Debug.Log("BoneDataC lb " + lb.ToString());
                 return lb.ToArray();
 			}
+
+
+            /// <summary>
+            /// 실제 중간값 얻는용
+            /// </summary>
             public void rawMid()
 			{
                 //Debug.Log("raw " + BitConverter.ToSingle(raw, 0) + " / " + BitConverter.ToSingle(raw2, 0));
@@ -1434,7 +1450,8 @@ namespace COM3D2.PoseStream.Plugin
 			return t;
 		}
 
-		private int get00000000byInt2(String s,String s2)
+
+		private int get00000000byIntMid(String s,String s2)
 		{
 			String cut = s.Substring(anmName.Length + 1, 8);
 			String cut2 = s2.Substring(anmName.Length + 1, 8);
@@ -1461,7 +1478,7 @@ namespace COM3D2.PoseStream.Plugin
 
 		private String myError(String s)
 		{
-			return "エラー오류:" + s;
+			return "오류:" + s;
 		}
 
 		private void onGUIFunc(int winId)
@@ -1484,7 +1501,7 @@ namespace COM3D2.PoseStream.Plugin
 			gsButton.fontSize = getGUIparam(GUIPARAM.S);
 			gsButton.alignment = TextAnchor.MiddleLeft;
             // 생성 버튼 클릭시
-			if (GUI.Button(new Rect(getGUIparam(GUIPARAM.EXEBX), getGUIparam(GUIPARAM.EXEBY), getGUIparam(GUIPARAM.EXEBW), getGUIparam(GUIPARAM.EXEBH)), "生成생성", gsButton))
+			if (GUI.Button(new Rect(getGUIparam(GUIPARAM.EXEBX), getGUIparam(GUIPARAM.EXEBY), getGUIparam(GUIPARAM.EXEBW), getGUIparam(GUIPARAM.EXEBH)), "anime anm생성", gsButton))
 			{
                 // anmMake 호출
                 resultMessage = anmMake(false);
@@ -1493,7 +1510,7 @@ namespace COM3D2.PoseStream.Plugin
             gsButton3.fontSize = getGUIparam(GUIPARAM.S);
             gsButton3.alignment = TextAnchor.MiddleLeft;
             // 생성 버튼 클릭시
-            if (GUI.Button(new Rect(getGUIparam(GUIPARAM.EXEBX ) + getGUIparam(GUIPARAM.EXEBW), getGUIparam(GUIPARAM.EXEBY), getGUIparam(GUIPARAM.EXEBW), getGUIparam(GUIPARAM.EXEBH)), "test", gsButton3))
+            if (GUI.Button(new Rect(getGUIparam(GUIPARAM.EXEBX ) + getGUIparam(GUIPARAM.EXEBW), getGUIparam(GUIPARAM.EXEBY), getGUIparam(GUIPARAM.EXEBW), getGUIparam(GUIPARAM.EXEBH)), "mid anm 생성", gsButton3))
 			{
                 // anmMake 호출
                 resultMessage = anmMake(true);
