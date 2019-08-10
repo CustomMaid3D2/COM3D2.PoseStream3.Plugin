@@ -38,20 +38,22 @@ namespace COM3D2.PoseStream.Plugin
 
 		public void Awake()
 		{
-			try
-			{
-				GameObject.DontDestroyOnLoad(this);
-				SceneManager.sceneLoaded += OnSceneLoaded;
-			}
-			catch (Exception e)
-			{
-				Debug.LogError(e.ToString());
-			}
+            // 장면 제한 제거
+			//try
+			//{
+			//	GameObject.DontDestroyOnLoad(this);
+			//	SceneManager.sceneLoaded += OnSceneLoaded;
+			//}
+			//catch (Exception e)
+			//{
+			//	Debug.LogError(e.ToString());
+			//}
 		}
 
         //화면 업데이트시 호출됨
 		public void Update()
 		{
+            // 단축키
 			try
 			{
 				//if (isStudio)
@@ -93,6 +95,7 @@ namespace COM3D2.PoseStream.Plugin
 		}
 
         //장면이 바뀔때마다
+        // 장면 제한 제거
 		private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
 		{
             //Debug.Log("PoseStream scene.name: "+scene.name);
@@ -386,6 +389,11 @@ namespace COM3D2.PoseStream.Plugin
             return true;
         }
 
+        /// <summary>
+        /// 파일 목록 검사
+        /// </summary>
+        /// <param name="minAnmMake"></param>
+        /// <returns></returns>
         private String anmMake(bool minAnmMake)
 		{
 			if (anmName.Length == 0)
@@ -461,6 +469,11 @@ namespace COM3D2.PoseStream.Plugin
 
 		public String errorFile = "";
 
+        /// <summary>
+        /// 실제 anm 파일 생성을 위한 목록 병합
+        /// </summary>
+        /// <param name="ss"></param>
+        /// <returns></returns>
         private bool makeAnmFile(String[] ss)
         {
             List<BoneDataA> bda = new List<BoneDataA>();
@@ -787,6 +800,8 @@ namespace COM3D2.PoseStream.Plugin
                     return false;
                 }
             }
+
+            // 게임 모션 목록에 추가
             if (!isExist)
             {
                 MotionWindow mw = GameObject.FindObjectOfType<MotionWindow>();
