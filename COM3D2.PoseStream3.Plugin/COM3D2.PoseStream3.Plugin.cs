@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 using UnityInjector;
 using UnityInjector.Attributes;
 
-namespace COM3D2.PoseStream.Plugin
+namespace COM3D2.PoseStreamLilly.Plugin
 {
 	#region PluginMain
 	///=========================================================================
@@ -25,8 +25,8 @@ namespace COM3D2.PoseStream.Plugin
 	///=========================================================================
 	[PluginFilter( "COM3D2x64" ), 
         PluginName("COM3D2.PoseStream.Plugin edit by Lilly"), 
-        PluginVersion( "1.1.0.1 " )]
-	public class PoseStream : PluginBase
+        PluginVersion( "190829" )]
+	public class PoseStreamLilly : PluginBase
 	{
         public const string Label = "PoseStream 1.1.0.0 edit by lilly 011";
         
@@ -144,7 +144,7 @@ namespace COM3D2.PoseStream.Plugin
 				case GUIPARAM.Y:
 					return (Screen.height - getGUIparam(GUIPARAM.H)) / 2;
 				case GUIPARAM.EXEBW:
-					return getGUIparam(GUIPARAM.W) / 5;
+					return getGUIparam(GUIPARAM.W) / 4;
 				case GUIPARAM.EXEBH:
 					return getGUIparam(GUIPARAM.H) / 5;
 				case GUIPARAM.EXEBX:
@@ -1496,14 +1496,18 @@ namespace COM3D2.PoseStream.Plugin
 			return "오류:" + s;
 		}
 
-		private void onGUIFunc(int winId)
+		/// <summary>
+        /// GUI 버튼 설정
+        /// </summary>
+        /// <param name="winId"></param>
+        private void onGUIFunc(int winId)
 		{
 			GUIStyle gsTextFiled = new GUIStyle(GUI.skin.textField);
 			gsTextFiled.fontSize = getGUIparam(GUIPARAM.S);
 			anmName = GUI.TextField(new Rect(getGUIparam(GUIPARAM.TX), getGUIparam(GUIPARAM.TY), getGUIparam(GUIPARAM.TW), getGUIparam(GUIPARAM.TH)), anmName, 30, gsTextFiled);
 			GUIStyle gsLabel = new GUIStyle(GUI.skin.label);
 			gsLabel.fontSize = getGUIparam(GUIPARAM.S);
-			GUI.Label(new Rect(getGUIparam(GUIPARAM.LX), getGUIparam(GUIPARAM.LY), getGUIparam(GUIPARAM.LW), getGUIparam(GUIPARAM.LH)), "名前（*_00000000の*の部分）を入力してください\nすでに生成先ファイルが存在する場合は上書きされます\n이름(*_00000000의*부분)을 입력하십시오. \n 이미 생성 된 파일이 있으면 덮어 씁니다.test_00000000파일인 경우 test입력", gsLabel);
+			GUI.Label(new Rect(getGUIparam(GUIPARAM.LX), getGUIparam(GUIPARAM.LY), getGUIparam(GUIPARAM.LW), getGUIparam(GUIPARAM.LH)), "이름(*_00000000의*부분)을 입력하십시오. \n 이미 생성 된 파일이 있으면 덮어 씁니다.test_00000000파일인 경우 test입력", gsLabel);
 			GUIStyle gsButton2 = new GUIStyle(GUI.skin.button);
 			gsButton2.fontSize = getGUIparam(GUIPARAM.S) * 2;
 			gsButton2.alignment = TextAnchor.MiddleCenter;
@@ -1516,7 +1520,7 @@ namespace COM3D2.PoseStream.Plugin
 			gsButton.fontSize = getGUIparam(GUIPARAM.S);
 			gsButton.alignment = TextAnchor.MiddleLeft;
             // 생성 버튼 클릭시
-			if (GUI.Button(new Rect(getGUIparam(GUIPARAM.EXEBX), getGUIparam(GUIPARAM.EXEBY), getGUIparam(GUIPARAM.EXEBW), getGUIparam(GUIPARAM.EXEBH)), "anime anm생성", gsButton))
+			if (GUI.Button(new Rect(getGUIparam(GUIPARAM.EXEBX), getGUIparam(GUIPARAM.EXEBY), getGUIparam(GUIPARAM.EXEBW), getGUIparam(GUIPARAM.EXEBH)), "anime anm 생성", gsButton))
 			{
                 // anmMake 호출
                 resultMessage = anmMake(false);
@@ -1538,8 +1542,8 @@ namespace COM3D2.PoseStream.Plugin
 			try
 			{
                 //포토모드이고 ui가 떠있을시
-				if ( isGUI)
 				//if (isStudio && isGUI)
+				if ( isGUI)
 				{
                     //Debug.Log(Label);
 					GUIStyle gsWin = new GUIStyle(GUI.skin.box);
